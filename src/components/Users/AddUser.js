@@ -8,29 +8,41 @@ const AddUser = () => {
     const [userInput, setUserInput] = useState({
         username:"",
         age:""
-      });
+    });
     
-      const getUsername = (event) => {
+    const getUsername = (event) => {
+        
         setUserInput((prevState) => {
-          return {
+            return {
             ...prevState,
             username : event.target.value
-          }
+            }
         })
-      }
+    
+    }
 
     const getUserAge = (event) => {
-        setUserInput((prevState) => {
-         return {
-           ...prevState,
-           age : event.target.value
-         }
-       })
-     }
 
-   
-     const addUserHandler = (event) => {
+        setUserInput((prevState) => {
+            return {
+                ...prevState,
+                age : event.target.value
+            }
+        })
+    
+    }
+
+    
+    const addUserHandler = (event) => {
         event.preventDefault();
+        if(userInput.username.trim().length === 0 || userInput.age.trim().length === 0){
+            return;
+        }
+        
+        if(userInput.age < 1){
+            return;
+        }
+
         console.log(`${userInput.username}`, `${userInput.age}`);
         setUserInput({ username: "", age: "" });  
       };
