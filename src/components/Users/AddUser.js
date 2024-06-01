@@ -3,57 +3,43 @@ import Card from "../UI/Card/Card";
 import "./AddUser.css"
 import Button from "../UI/Button/Button";
 
-const AddUser = () => {
-
-    const [userInput, setUserInput] = useState({
-        username:"",
-        age:""
-    });
-    
+const AddUser = (props) => {
+    const [enteredUsername, setEnteredUsername] = useState("");
+    const [enteredAge, setEnteredAge] = useState("");
+  
+  
     const getUsername = (event) => {
-        
-        setUserInput((prevState) => {
-            return {
-            ...prevState,
-            username : event.target.value
-            }
-        })
-    
+        setEnteredUsername(event.target.value);
     }
 
     const getUserAge = (event) => {
-
-        setUserInput((prevState) => {
-            return {
-                ...prevState,
-                age : event.target.value
-            }
-        })
-    
+        setEnteredAge(event.target.value);
     }
 
     
     const addUserHandler = (event) => {
         event.preventDefault();
-        if(userInput.username.trim().length === 0 || userInput.age.trim().length === 0){
+        if(enteredUsername.trim().length === 0 || enteredAge.trim().length === 0){
             return;
         }
         
-        if(userInput.age < 1){
+        if(enteredAge < 1){
             return;
         }
-
-        console.log(`${userInput.username}`, `${userInput.age}`);
-        setUserInput({ username: "", age: "" });  
-      };
+        
+        
+        props.onAddUser(enteredUsername, enteredAge);
+        setEnteredUsername("");
+        setEnteredAge("");
+    };
 
 return (
     <Card className="input">
     <form onSubmit={addUserHandler}>
         <label htmlFor="username">Username</label>
-        <input type="text" id="username" value={userInput.username} onChange={getUsername}/>
+        <input type="text" id="username" value={enteredUsername} onChange={getUsername}/>
         <label htmlFor="age">Age</label>
-        <input type="number" id="age" value={userInput.age} onChange={getUserAge}/>
+        <input type="number" id="age" value={enteredAge} onChange={getUserAge}/>
         {/* <button type="submit">Add User</button> */}
         <Button type="submit" >Add User</Button>
         {/* <Button onClick={clickHandler}>Click Here</Button> */}
